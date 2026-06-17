@@ -1,5 +1,6 @@
 discord.py
-flask
-pymongo
+fastapi
+uvicorn
+motor
 python-dotenv
-gunicorn
+requests

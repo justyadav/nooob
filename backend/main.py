@@ -123,8 +123,7 @@ async def auth_callback(code: str = None):
     }
     
     try:
-        token_response = requests.post("https://discord.com/api/v1/oauth2/token", data=data, headers=headers)
-        
+       token_response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
         # Verbose terminal logs to reveal explicitly what parameters fail validation protocols
         if token_response.status_code != 200:
             print(f"❌ Discord API Handshake Rejected: Status {token_response.status_code}")

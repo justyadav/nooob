@@ -6,8 +6,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
-from database import guild_settings
-
+from backend.database import guild_settings
 load_dotenv()
 
 # Initialize Bot

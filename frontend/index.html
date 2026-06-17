@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Discord Bot Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>🛠️ Admin Dashboard</h1>
+        <h2>Select a Server</h2>
+        <div id="guilds-list">Loading servers...</div>
+
+        <hr>
+
+        <h2>Manage Selected Server</h2>
+        <form id="config-form">
+            <label>Custom Welcome Message:</label><br>
+            <textarea id="welcome-msg" rows="4" cols="50"></textarea><br><br>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:8000"; // Update to Render URL later
+        let selectedGuildId = "your_target_guild_id_here"; // Dynamically update this based on choice
+
+        // Fetch Guilds
+        async function fetchGuilds() {
+            const res = await fetch(`${API_URL}/api/guilds`);
+            const data = await res.json();
+            const listDiv = document.getElementById('guilds-list');
+            listDiv.innerHTML = data.guilds.map(g => `
+                <div class="guild-card" onclick="selectedGuildId='${g.id}'">
+                    <img src="${g.icon || 'https://via.placeholder.com/50'}" width="50">
+                    <strong>${g.name}</strong> (${g.member_count} members)
+                </div>
+            `).join('');
+        }
+
+        // Save Configuration
+        document.getElementById('config-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const welcomeMessage = document.getElementById('welcome-msg').value;
+
+            const res = await fetch(`${API_URL}/api/guild/${selectedGuildId}/config`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ welcome_message: welcomeMessage })
+            });
+            const result = await res.json();
+            alert(result.message || "Failed to update configuration");
+        });
+
+        fetchGuilds();
+    </script>
+</body>
+</html>

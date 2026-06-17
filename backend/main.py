@@ -63,16 +63,25 @@ app.add_middleware(
 async def root():
     return {"status": "online"}
 
+from urllib.parse import urlencode
+
 @app.get("/api/auth/login")
 async def auth_login():
-    """Builds and redirects users to the Discord OAuth2 Consent screen."""
-    discord_login_url = (
-        f"https://discord.com/api/oauth2/authorize"
-        f"?client_id={CLIENT_ID}"
-        f"&redirect_uri={REDIRECT_URI}"
-        f"&response_type=code"
-        f"&scope=identify%20guilds"
-    )
+    """Securely builds the Discord OAuth2 URL using URL encoding."""
+    # Ensure REDIRECT_URI is stripped of any hidden spaces from the environment
+    redirect_uri = os.getenv("REDIRECT_URI").strip()
+    client_id = os.getenv("CLIENT_ID").strip()
+
+    params = {
+        "client_id": client_id,
+        "redirect_uri": redirect_uri,
+        "response_type": "code",
+        "scope": "identify guilds"  # Space-separated scopes
+    }
+    
+    # urlencode automatically fixes spaces, slashes, and special characters safely
+    discord_login_url = f"https://discord.com/api/oauth2/authorize?{urlencode(params)}"
+    
     return RedirectResponse(url=discord_login_url)
 
 @app.get("/api/auth/callback")

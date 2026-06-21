@@ -101,7 +101,6 @@ async def auth_login():
         "scope": "identify guilds"
     }
     
-    # Safely constructs clean parameters preventing string injection or structural errors
     discord_login_url = f"https://discord.com/api/oauth2/authorize?{urlencode(params)}"
     return RedirectResponse(url=discord_login_url)
 
@@ -123,8 +122,10 @@ async def auth_callback(code: str = None):
     }
     
     try:
-       token_response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
-        # Verbose terminal logs to reveal explicitly what parameters fail validation protocols
+        # Fixed clean Discord API endpoint
+        token_response = requests.post("https://discord.com/api/oauth2/token", data=data, headers=headers)
+        
+        # Checked and strictly aligned block formatting
         if token_response.status_code != 200:
             print(f"❌ Discord API Handshake Rejected: Status {token_response.status_code}")
             print(f"❌ Discord Error Details: {token_response.text}")

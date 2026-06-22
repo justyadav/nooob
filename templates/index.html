@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ender Bot Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-slate-900 text-slate-100 font-sans">
+    
+    <header class="p-6 max-w-7xl mx-auto w-full flex justify-between items-center">
+        <div class="text-2xl font-black tracking-wider text-purple-400">ENDER BOT</div>
+        <div>
+            {% if user %}
+                <a href="/dashboard" class="bg-purple-600 hover:bg-purple-700 px-5 py-2.5 rounded-lg font-semibold shadow transition duration-200">Go to Console</a>
+            {% else %}
+                <a href="{{ login_url }}" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 rounded-lg font-semibold shadow transition duration-200">Login with Discord</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center text-center">
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+            Next-Gen Discord Node Administration <span class="text-purple-400">Simplified</span>
+        </h1>
+        <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10">
+            Ender Bot delivers high performance data pipelines, modular leveling infrastructure, and robust configuration states editable in real-time.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-1">Managed Nodes</div>
+                <div class="text-3xl font-bold text-white">{{ guild_count }} Servers</div>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-1">Users Monitored</div>
+                <div class="text-3xl font-bold text-white">{{ user_count }} Members</div>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-1">Socket Latency</div>
+                <div class="text-3xl font-bold text-emerald-400">{{ ping }} ms</div>
+            </div>
+        </div>
+
+        <div class="flex justify-center gap-4">
+            <a href="{{ login_url }}" class="bg-purple-600 hover:bg-purple-700 text-lg px-8 py-3.5 rounded-xl font-bold transition">Authorize Access Portal</a>
+        </div>
+    </main>
+
+    <footer class="p-6 text-center text-xs text-slate-500 border-t border-slate-800">
+        &copy; 2026 Ender Bot Application Node. Run on Cloud Architecture Systems.
+    </footer>
+</body>
+</html>

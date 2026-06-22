@@ -1,6 +1,0 @@
-discord.py
-fastapi
-uvicorn
-motor
-python-dotenv
-requests
